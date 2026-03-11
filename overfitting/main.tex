@@ -1,0 +1,114 @@
+\documentclass[12pt, aspectratio=169]{beamer}
+
+\usetheme{Madrid}
+\usecolortheme{default}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{tcolorbox}
+
+
+\title{Sobre \textit{Overfitting} e Generalização de Modelos}
+\author{J. Roberto S. de Moura}
+\date{\today}
+
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+
+\begin{frame}\frametitle{Agenda}
+  \tableofcontents
+\end{frame}
+
+\section{Motivação}
+\begin{frame}\frametitle{Motivação}
+  Imagine um estudante que decora todas as provas anteriores de um professor,
+  mas que não aprende o conteúdo.\\[1cm]
+\centering\fbox{
+    \textbf{O que acontece com ele na próxima prova?}
+}
+\end{frame}
+
+\section{Propósito de um modelo de \textit{Machine Learning}}
+\begin{frame}\frametitle{Propósito de um modelo de \textit{Machine Learning}}
+
+  \begin{tcolorbox}[colback=gray!10, colframe=black!70, title=Problema Central]
+  
+    Um modelo de ML minimiza uma função de perda nos dados de treino.
+    Esse é o único objetivo dele. Ele não sabe o que é "generalizar".
+    Ele não sabe que existe um mundo além dos dados que você deu.
+
+      \begin{enumerate}
+        \item O que realmente queremos: minimizar o erro em dados \textbf{NOVOS} - nunca vistos
+        \item O que o modelo está tentando fazer: minimizar o erro nos dados de \textbf{TREINO}
+      \end{enumerate}
+
+  \end{tcolorbox}
+
+\end{frame}
+
+\section{O que é o \textit{Overfitting}?}
+\begin{frame}\frametitle{O que é o \textit{Overfitting}?}
+Quando passamos os dados para o modelo, ele não sabe o que é o ruído que está dentro dos dados.
+$$
+\Downarrow
+$$
+\textbf{Ele aprende o ruído dos dados de treino como se fosse sinal.}
+
+Vale lembrar que os dados reais, possuem duas componentes:
+$$
+  y = f(x) + \epsilon
+$$
+  sendo $f(x)$ o padrão real que queremos aprender e $\epsilon$ um ruído aleatório.
+
+\end{frame}
+
+\section{O que é a Generalização?}
+\begin{frame}\frametitle{O que é a Generalização?}
+Generalizar é a capacidade de um modelo de ML de performar bem em dados novos, nunca vistos antes.\\[1cm]
+\textbf{O que é um modelo que generaliza?}
+\begin{tcolorbox}[colback=gray!10, colframe=black!70, title=Definição de Generalização]
+  Um modelo que generaliza é aquele que consegue aprender o padrão real $f(x)$, e não o ruído $\epsilon$.
+\end{tcolorbox}
+\end{frame}
+
+\section{Um Pequeno Experimento Mental}
+\begin{frame}\frametitle{Um Pequeno Experimento Mental}
+Situação: Dois médicos diagnosticando pneumonia.\\[0.5cm]
+\begin{table}
+  \begin{tabular}{l|l}
+
+    Médico A & Médico B \\
+    \hline
+    Estudou 10.000 casos variados & Memorizou 100 casos em detalhes absurdos \\
+    Aprende padrões gerais & Aprende ``paciente José, 45 anos, fuma'' \\
+    Erra um pouco em casos conhecidos & Acerta todos os casos conhecidos \\
+    Funciona com pacientes novos & Falha miseravelmente com pacientes novos \\
+
+  \end{tabular}
+\end{table}
+Conclusão: O médico A é um modelo que generaliza, enquanto o médico B é um modelo que sofre de \textit{overfitting}
+\end{frame}
+
+\begin{frame}\frametitle{Mas Por Que o \textit{Overfitting} Acontece?}
+Três causas estruturais:
+\begin{itemize}
+  \item[$\rightarrow$] Capacidade excessiva do modelo: Muitos parâmetros para pouco dado. O modelo tem "espaço" para memorizar.
+  \item[$\rightarrow$] Dados insuficientes ou não representativos: Pouco dado = o modelo não vê variação suficiente para aprender o padrão real.
+  \item[$\rightarrow$] Treinamento longo demais: Nas primeiras épocas, o modelo aprende padrões gerais. Depois, começa a ajustar detalhes específicos dos dados de treino.\\
+\begin{itemize}
+      \item[$\rightarrow$] época 10:  $val\_loss$ cai   $\leftarrow$ está generalizando
+      \item[$\rightarrow$] época 50:  $val\_loss$ sobe  $\leftarrow$ está memorizando
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+
+\end{document}
+'
